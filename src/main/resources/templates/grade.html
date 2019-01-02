@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>班级管理</title>
+    <link rel="stylesheet" type="text/css"
+          href="/jquery-easyui-1.3.3/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css"
+          href="/jquery-easyui-1.3.3/themes/icon.css">
+    <script type="text/javascript"
+            src="/jquery-easyui-1.3.3/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
+    <script type="text/javascript"
+            src="/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+
+</head>
+<body style="margin:1px;" id="ff">
+<table id="dg" class="easyui-datagrid" pagination="true"
+       rownumbers="true" fit="true" data-options="pageSize:18,pageList: [5,10,15,18,20,30,40,50,100]"
+       url="/grade/list" toolbar="#tb">
+    <thead data-options="frozen:true">
+    <tr>
+        <th field="cb" checkbox="true" align="center"></th>
+        <th field="id" width="10%" align="center" hidden="true">编号</th>
+        <th field="name" width="200" align="center">班级名称</th>
+        <th field="kName" width="150" align="center">所属园所</th>
+        <th field="linkman" width="150" align="center">班级联系人</th>
+        <th field="phoneNumber" width="150" align="center">联系人电话</th>
+        <th field="createTime" width="150" align="center">创建时间</th>
+    </tr>
+    </thead>
+</table>
+<div id="tb">
+    <div>
+        <a href="javascript:openAddDialog('添加班级信息','/grade/save')" class="easyui-linkbutton"
+           iconCls="icon-add" plain="true">添加</a>
+        <a
+                href="javascript:openModifyDialog('/grade/save?id=')"
+                class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
+        <a
+                href="javascript:del('/grade/del')" class="easyui-linkbutton"
+                iconCls="icon-remove" plain="true">删除</a>
+    </div>
+    <div>
+        &nbsp;园所：&nbsp;<input id="searchKId" name="kId" data-options="onSelect:searchData"/>&nbsp; <a
+            href="javascript:clearSearch()" class="easyui-linkbutton"
+            iconCls="icon-remove" plain="true">清除选择</a>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog"
+     style="width: 615px;height:180px;padding: 10px 20px; position: relative; z-index:1000;"
+     closed="true" buttons="#dlg-buttons">
+    <form id="fm" method="post">
+        <table cellspacing="8px">
+            <tr>
+                <td>班级名称：</td>
+                <td><input type="text" name="name" class="easyui-validatebox" required="true"/>
+                </td>
+                <td>所属园所：</td>
+                <td>
+                    <input id="kId" name="kId" data-options="required:true,onSelect:setKName"/>
+                    <input type="hidden" id="kName" name="kName">
+                </td>
+            </tr>
+            <tr>
+                <td>班级联系人：</td>
+                <td><input type="text" name="linkman"/>
+                </td>
+                <td>联系人电话：</td>
+                <td><input type="text" name="phoneNumber"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="dlg-buttons">
+    <a href="javascript:save()" class="easyui-linkbutton"
+       iconCls="icon-ok">保存</a> <a href="javascript:closeDialog()"
+                                   class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+</div>
+<script type="application/javascript">
+    $("input[name='kId']").combobox({
+        url: '/kindergarten/combobox',
+        valueField: 'id',
+        textField: 'name',
+        editable: false,
+        panelHeight: '200'
+    });
+
+    function setKName(record) {
+        $("#kName").val(record.name)
+    }
+
+    function searchData(record) {
+        $("#dg").datagrid('load', {
+            "kId": record.id,
+        });
+        $("#kId").combobox('setValue', record.id)
+        $("#kName").val(record.name)
+    }
+
+    function clearSearch() {
+        $("#searchKId").combobox('setValue', '')
+        $("#kId").combobox('setValue', '')
+        $("#dg").datagrid('load', {});
+    }
+
+</script>
+</body>
+</html>
