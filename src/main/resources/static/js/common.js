@@ -21,10 +21,14 @@ function getCurrentDate() {
 var url;
 var id;
 
-function closeDialog() {
-    $("#dlg").dialog("close");
+function resetValue() {
+    $('#fm').form('clear');
 }
 
+function closeDialog() {
+    $("#dlg").dialog("close");
+    resetValue();
+}
 function save() {
     $("#fm").form("submit", {
         url: url,
@@ -48,15 +52,12 @@ function save() {
 function openAddDialog(title, module) {
     $("#dlg").dialog("open").dialog("setTitle", title);
     url = module;
-    id = '';
 }
-
 function search() {
     $("#dg").datagrid('load', {
         "name": $("#name").val(),
     });
 }
-
 function del(url) {
     var selectedRows = $("#dg").datagrid('getSelections');
     if (selectedRows.length == 0) {
@@ -86,7 +87,6 @@ function del(url) {
             }
         }).window({width: 500, height: 150});
 }
-
 function openModifyDialog(module) {
     var selectedRows = $("#dg").datagrid('getSelections');
     if (selectedRows.length != 1) {
@@ -96,6 +96,5 @@ function openModifyDialog(module) {
     var row = selectedRows[0];
     $("#dlg").dialog("open").dialog("setTitle", "修改信息");
     $('#fm').form('load', row);
-    id = row.id
-    url = module + id;
+    url = module + row.id;
 }

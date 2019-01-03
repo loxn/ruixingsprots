@@ -57,20 +57,19 @@
         <table cellspacing="8px">
             <tr>
                 <td>班级名称：</td>
-                <td><input type="text" name="name" class="easyui-validatebox" required="true"/>
+                <td><input type="text" id="name" name="name" class="easyui-validatebox" required="true"/>
                 </td>
                 <td>所属园所：</td>
                 <td>
-                    <input id="kId" name="kId" data-options="required:true,onSelect:setKName"/>
-                    <input type="hidden" id="kName" name="kName">
+                    <input id="kId" name="kId" data-options="required:true"/>
                 </td>
             </tr>
             <tr>
                 <td>班级联系人：</td>
-                <td><input type="text" name="linkman"/>
+                <td><input type="text" name="linkman" id="linkman"/>
                 </td>
                 <td>联系人电话：</td>
-                <td><input type="text" name="phoneNumber"/>
+                <td><input type="text" name="phoneNumber" id="phoneNumber"/>
                 </td>
             </tr>
         </table>
@@ -91,22 +90,23 @@
         panelHeight: '200'
     });
 
-    function setKName(record) {
-        $("#kName").val(record.name)
-    }
-
     function searchData(record) {
         $("#dg").datagrid('load', {
             "kId": record.id,
         });
         $("#kId").combobox('setValue', record.id)
-        $("#kName").val(record.name)
     }
 
     function clearSearch() {
         $("#searchKId").combobox('setValue', '')
         $("#kId").combobox('setValue', '')
         $("#dg").datagrid('load', {});
+    }
+
+    function resetValue() {
+        $('#name').val('');
+        $('#linkman').val('');
+        $('#phoneNumber').val('');
     }
 
 </script>

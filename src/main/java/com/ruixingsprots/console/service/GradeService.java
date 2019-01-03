@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ruixingsprots.console.dao.GradeMapper;
+import com.ruixingsprots.console.dao.KindergartenMapper;
 import com.ruixingsprots.console.dao.StudentMapper;
 import com.ruixingsprots.console.exception.ServiceException;
 import com.ruixingsprots.console.pojo.po.Grade;
 import com.ruixingsprots.console.pojo.po.GradeExample;
+import com.ruixingsprots.console.pojo.po.Kindergarten;
 import com.ruixingsprots.console.pojo.po.Student;
 import com.ruixingsprots.console.pojo.po.StudentExample;
 
@@ -28,6 +30,8 @@ public class GradeService {
     private GradeMapper gradeMapper;
     @Autowired
     private StudentMapper studentMapper;
+    @Autowired
+    private KindergartenMapper kindergartenMapper;
 
     public List<Grade> list(Integer kId) {
         GradeExample example = new GradeExample();
@@ -48,6 +52,9 @@ public class GradeService {
             }
         }
 
+        // 查询kName
+        Kindergarten kindergarten = kindergartenMapper.selectByPrimaryKey(recoder.getkId());
+        recoder.setkName(kindergarten.getName());
         if (recoder.getId() != null) {
             gradeMapper.updateByPrimaryKeySelective(recoder);
             // 如果班级名称改变了，更新学生数据

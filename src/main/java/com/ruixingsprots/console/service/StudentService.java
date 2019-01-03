@@ -11,7 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.ruixingsprots.console.dao.GradeMapper;
+import com.ruixingsprots.console.dao.KindergartenMapper;
 import com.ruixingsprots.console.dao.StudentMapper;
+import com.ruixingsprots.console.pojo.po.Grade;
+import com.ruixingsprots.console.pojo.po.Kindergarten;
 import com.ruixingsprots.console.pojo.po.Student;
 import com.ruixingsprots.console.pojo.po.StudentExample;
 import com.ruixingsprots.console.util.PinYinUtils;
@@ -24,6 +28,11 @@ import com.ruixingsprots.console.util.PinYinUtils;
 public class StudentService {
     @Autowired
     private StudentMapper studentMapper;
+    @Autowired
+    private GradeMapper gradeMapper;
+    @Autowired
+    private KindergartenMapper kindergartenMapper;
+
 
     public List<Student> list(String name, Integer kId, Integer cId) {
         StudentExample example = new StudentExample();
@@ -41,6 +50,10 @@ public class StudentService {
     }
 
     public void save(Student recoder) {
+        Kindergarten kindergarten = kindergartenMapper.selectByPrimaryKey(recoder.getkId());
+        recoder.setkName(kindergarten.getName());
+        Grade grade = gradeMapper.selectByPrimaryKey(recoder.getcId());
+        recoder.setcName(grade.getName());
         if (recoder.getId() != null) {
             studentMapper.updateByPrimaryKeySelective(recoder);
         } else {

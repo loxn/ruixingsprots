@@ -54,7 +54,7 @@
     </div>
     <div>
         &nbsp;园所：<input id="searchKId" name="kId" data-options="onSelect: initSearchGradeBox"/>
-        &nbsp;班级：<span id="searchCIdSpan"><input type="text" readonly/></span>
+        &nbsp;班级：<span id="searchCIdSpan"><input readonly/></span>
         &nbsp;姓名：<input type="text" id="name" size="20" onkeydown="if(event.keyCode==13) searchStu()"/>
         &nbsp; <a href="javascript:searchStu()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
         &nbsp; <a href="javascript:clearSearch()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">清除选择</a>
@@ -81,44 +81,40 @@
                     <input type="radio" name="sex" value="女">女
                 </td>
                 <td>年龄：</td>
-                <td><input type="text" name="age" class="easyui-numberbox"/>
+                <td><input type="text" id="age" name="age" class="easyui-numberbox"/>
             </tr>
             <tr>
                 <td>身高：</td>
-                <td><input type="text" name="height" class="easyui-numberbox"/>
+                <td><input type="text" name="height" id="height" class="easyui-numberbox"/>
                 </td>
                 <td>体重：</td>
-                <td><input type="text" name="weight" class="easyui-numberbox"/>
+                <td><input type="text" name="weight" id="weight" class="easyui-numberbox"/>
             </tr>
             <tr>
                 </td>
                 <td>园所：</td>
                 <td>
                     <input id="kId" name="kId" data-options="required: true,onSelect:initGradeBox"/>
-                    <input type="hidden" id="kName" name="kName">
                 </td>
                 <td>班级：</td>
-                <td><span id="cIdSpan">
-                        <input name="cId" data-options="editable: false"/>
-                    </span>
-                    <input type="hidden" id="cName" name="cName"/>
+                <td>
+                    <span id="cIdSpan"><input readonly/></span>
                 </td>
             </tr>
-
             <tr>
                 <td>妈妈：</td>
-                <td><input type="text" name="matherName"/>
+                <td><input type="text" name="matherName" id="matherName"/>
                 </td>
                 <td>妈妈电话号：</td>
-                <td><input type="text" name="matherPhone"/>
+                <td><input type="text" name="matherPhone" id="matherPhone"/>
                 </td>
             </tr>
             <tr>
                 <td>爸爸：</td>
-                <td><input type="text" name="fatherName"/>
+                <td><input type="text" name="fatherName" id="fatherName"/>
                 </td>
                 <td>爸爸电话号：</td>
-                <td><input type="text" name="fatherPhone"/>
+                <td><input type="text" name="fatherPhone" id="fatherPhone"/>
                 </td>
             </tr>
         </table>
@@ -155,7 +151,6 @@
     });
 
     function initGradeBox(record) {
-        $("#kName").val(record.name);
         $("#cIdSpan").html('<input id="cId" name="cId" />')
         $("#cId").combobox({
             url: '/grade/combobox?kId=' + record.id,
@@ -163,10 +158,7 @@
             textField: 'name',
             editable: false,
             required: true,
-            panelHeight: '200',
-            onSelect: function (record) {
-                $("#cName").val(record.name)
-            }
+            panelHeight: '200'
         });
     }
 
@@ -188,7 +180,6 @@
                     "cId": grade.id,
                 });
                 $("#cId").combobox('setValue', grade.id);
-                $("#cName").val(grade.name)
             }
         });
     }
@@ -209,12 +200,46 @@
     function clearSearch() {
         $("#kId").combobox('setValue', '')
         $("#searchKId").combobox('setValue', '')
-        $("#cIdSpan").html('<input type="text" readonly/>')
-        $("#searchCIdSpan").html('<input type="text" readonly/>')
+        $("#cIdSpan").html('<input readonly/>')
+        $("#searchCIdSpan").html('<input readonly/>')
         $("#name").val('')
         $("#dg").datagrid('load', {});
     }
 
+    function openModifyDialog(module) {
+        var selectedRows = $("#dg").datagrid('getSelections');
+        if (selectedRows.length != 1) {
+            $.messager.alert("系统提示", "请选择一条要编辑的数据！");
+            return;
+        }
+        var row = selectedRows[0];
+        $("#dlg").dialog("open").dialog("setTitle", "修改信息");
+        $('#fm').form('load', row);
+        id = row.id
+        url = module + id;
+        $("#cIdSpan").html('<input id="cId" name="cId" />')
+        $("#cId").combobox({
+            url: '/grade/combobox?kId=' + row.kId,
+            valueField: 'id',
+            textField: 'name',
+            editable: false,
+            required: true,
+            panelHeight: '200'
+        });
+        $("#cId").combobox('setValue', row.cId);
+    }
+
+    function resetValue() {
+        $('#lastName').val('');
+        $('#username').val('');
+        $('#age').val('');
+        $('#height').val('');
+        $('#weight').val('');
+        $('#matherName').val('');
+        $('#matherPhone').val('');
+        $('#fatherName').val('');
+        $('#fatherPhone').val('');
+    }
 </script>
 </body>
 </html>
