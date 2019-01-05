@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ruixingsprots.console.common.Const;
+
 /**
  * 登陆检查
  */
@@ -17,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        Object user = request.getSession().getAttribute("LOGIN_USER");
+        Object user = request.getSession().getAttribute(Const.LOGIN_USER);
         if (user == null) {
             //未登陆，返回登陆页面
             request.getRequestDispatcher("/login").forward(request, response);

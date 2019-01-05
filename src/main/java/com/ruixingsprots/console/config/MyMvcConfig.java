@@ -9,6 +9,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import com.ruixingsprots.console.component.LoginInterceptor;
+
 @Configuration
 public class MyMvcConfig extends WebMvcConfigurerAdapter {
 
@@ -24,8 +26,8 @@ public class MyMvcConfig extends WebMvcConfigurerAdapter {
             //注册拦截器
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
-                //                registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**")
-                //                        .excludePathPatterns("/login", "/doLogin");
+                registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**")
+                        .excludePathPatterns("/login", "/doLogin", "/code");
             }
         };
         return adapter;

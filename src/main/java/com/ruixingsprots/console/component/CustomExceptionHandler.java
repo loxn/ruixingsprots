@@ -28,13 +28,13 @@ public class CustomExceptionHandler implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
                                          Exception exception) {
         AjaxResult result;
+        exception.printStackTrace();
         if (exception instanceof ServiceException) {
             result = AjaxResult.errorResult(exception.getMessage());
         } else {
             result = AjaxResult.errorResult("系统错误");
         }
         writeHttpResponse(response, result);
-
         return new ModelAndView();
     }
 
