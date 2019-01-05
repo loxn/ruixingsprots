@@ -71,4 +71,11 @@ public class IndexCtrl extends BaseCtrl {
         return modelAndView;
     }
 
+    @GetMapping("tab")
+    public ModelAndView tab() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("tab");
+        return modelAndView;
+    }
+
 }

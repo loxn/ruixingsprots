@@ -2,23 +2,16 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>测试项目管理</title>
-    <link rel="stylesheet" type="text/css"
-          href="/jquery-easyui-1.3.3/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css"
-          href="/jquery-easyui-1.3.3/themes/icon.css">
-    <script type="text/javascript"
-            src="/jquery-easyui-1.3.3/jquery.min.js"></script>
-    <script type="text/javascript"
-            src="/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
-    <script type="text/javascript"
-            src="/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
+    <title>体测项目</title>
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui/themes/icon.css">
+    <script type="text/javascript" src="jquery-easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
-
-</head>
 <body style="margin:1px;" id="ff">
 <table id="dg" class="easyui-datagrid" pagination="true"
-       rownumbers="true" fit="true" data-options="pageSize:18,pageList: [5,10,15,18,20,30,40,50,100]"
+       rownumbers="true" fit="true" data-options="pageSize:18,pageList: [5,10,15,18,20,30,40,50,100],title:'体测项目'"
        url="/project/list" toolbar="#tb">
     <thead data-options="frozen:true">
     <tr>
