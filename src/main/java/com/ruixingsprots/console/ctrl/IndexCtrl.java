@@ -27,7 +27,7 @@ import com.ruixingsprots.console.pojo.vo.AjaxResult;
  * Created by v_luoxin on 2018-12-15 12:53
  */
 @Controller
-public class IndexCtrl extends BaseCtrl {
+public class IndexCtrl {
     @Autowired
     private UserMapper userMapper;
 
