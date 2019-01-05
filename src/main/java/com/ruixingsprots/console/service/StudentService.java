@@ -55,6 +55,7 @@ public class StudentService {
         Grade grade = gradeMapper.selectByPrimaryKey(recoder.getcId());
         recoder.setcName(grade.getName());
         if (recoder.getId() != null) {
+
             studentMapper.updateByPrimaryKeySelective(recoder);
         } else {
             recoder.setCreateTime(new Date());
